@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unchanged-config
+  namespace: default
+data:
+  key: value
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: new-config
+  namespace: default
+data:
+  key: new-value
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: changed-app
+  namespace: default
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: changed-app
+  template:
+    metadata:
+      labels:
+        app: changed-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.21
