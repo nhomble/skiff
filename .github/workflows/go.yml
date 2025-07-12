@@ -32,7 +32,7 @@ jobs:
         git diff --exit-code || (echo "Code is not formatted correctly. Please run 'make fmt' to format the code." && exit 1)
 
     - name: Upload skiff artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: skiff-binary
         path: skiff
@@ -46,7 +46,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Download skiff binary
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
           name: skiff-binary
           path: . # Download to the root of the workspace
