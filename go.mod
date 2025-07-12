@@ -1,4 +1,4 @@
-module yspec
+module skiff
 
 go 1.23
 

@@ -38,7 +38,6 @@ func ParseYAMLStream(reader io.Reader) (map[string]map[string]interface{}, error
 	return objects, nil
 }
 
-
 // GenerateObjectKey creates a unique identifier for a K8s object
 // Format: apiVersion/kind/namespace/name (uses "default" when namespace not specified)
 func GenerateObjectKey(obj map[string]interface{}) (string, error) {
@@ -69,4 +68,3 @@ func GenerateObjectKey(obj map[string]interface{}) (string, error) {
 
 	return fmt.Sprintf("%s/%s/%s/%s", apiVersion, kind, namespace, name), nil
 }
-

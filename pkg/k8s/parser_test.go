@@ -103,7 +103,6 @@ data:
 	}
 }
 
-
 func TestGenerateObjectKey(t *testing.T) {
 	tests := []struct {
 		name     string
@@ -203,4 +202,3 @@ func TestGenerateObjectKey(t *testing.T) {
 		})
 	}
 }
-

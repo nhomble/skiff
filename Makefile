@@ -1,49 +1,26 @@
-.PHONY: build test clean install fmt lint help test-policy
+PROG 	:= skiff
 
-# Default target
+.PHONY: build test/unit clean install fmt help test/policy test benchmark example demo
+
 all: build
 
-# Build the binary
 build:
-	go build -o yspec ./cmd/yspec
+	go build -o $(PROG) ./cmd/skiff
 
-# Install the binary to GOPATH/bin
-install:
-	go install ./cmd/yspec
-
-# Run tests
-test:
-	go test ./...
-
-# Format code
 fmt:
 	go fmt ./...
 
-# Lint code (requires golangci-lint)
-lint:
-	golangci-lint run
-
-# Clean build artifacts
 clean:
-	rm -f yspec
+	rm -f $(PROG)
 
-# Run with example files
-example: build
-	./yspec examples/simple-before.yaml examples/simple-after.yaml
+test/unit:
+	go test ./...
 
-# Test policy integration with conftest
-test-policy: build
-	./examples/test-policy.sh
+test/policy: build
+	./test/test-policies/test-policy.sh
 
-# Show help
-help:
-	@echo "Available targets:"
-	@echo "  build       - Build the yspec binary"
-	@echo "  install     - Install to GOPATH/bin"
-	@echo "  test        - Run tests"
-	@echo "  fmt         - Format code"
-	@echo "  lint        - Lint code"
-	@echo "  clean       - Clean build artifacts"
-	@echo "  example     - Run with example files"
-	@echo "  test-policy - Test policy integration with conftest"
-	@echo "  help        - Show this help"
+test: build test/unit test/policy
+	@echo "All tests passed"
+
+benchmark: build
+	./test/performance/benchmark.sh
