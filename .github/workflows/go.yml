@@ -51,10 +51,8 @@ jobs:
           name: skiff-binary
           path: . # Download to the root of the workspace
 
-      - name: Make skiff executable
-        run: chmod +x ./skiff
-
       - name: Run Integration Tests
         run: |-
-          find .
+          chmod +x ./skiff
+          ./skiff
           ./test/test-policies/test-policy.sh
