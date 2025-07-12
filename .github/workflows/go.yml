@@ -19,8 +19,8 @@ jobs:
 
     - name: Build
       run: |-
-        find .
         make build
 
     - name: Test
-      run: make test
+      run: |-
+        make test/unit
