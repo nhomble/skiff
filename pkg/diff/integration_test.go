@@ -69,8 +69,8 @@ func TestChangesField(t *testing.T) {
 		fromInt, fromOk := replicaChange.From.(int)
 		toInt, toOk := replicaChange.To.(int)
 		if !fromOk || !toOk || fromInt != 2 || toInt != 5 {
-			t.Errorf("expected replica change from 2 to 5, got from %v (%T) to %v (%T)", 
-			         replicaChange.From, replicaChange.From, replicaChange.To, replicaChange.To)
+			t.Errorf("expected replica change from 2 to 5, got from %v (%T) to %v (%T)",
+				replicaChange.From, replicaChange.From, replicaChange.To, replicaChange.To)
 		}
 	})
 
@@ -125,8 +125,8 @@ func TestChangesField(t *testing.T) {
 		fromInt, fromOk := replicaChange.From.(int)
 		toInt, toOk := replicaChange.To.(int)
 		if !fromOk || !toOk || fromInt != 10 || toInt != 15 {
-			t.Errorf("expected maxReplicas change from 10 to 15, got from %v (%T) to %v (%T)", 
-			         replicaChange.From, replicaChange.From, replicaChange.To, replicaChange.To)
+			t.Errorf("expected maxReplicas change from 10 to 15, got from %v (%T) to %v (%T)",
+				replicaChange.From, replicaChange.From, replicaChange.To, replicaChange.To)
 		}
 
 		// Should have behavior policy changes with array indices
@@ -136,14 +136,14 @@ func TestChangesField(t *testing.T) {
 		}
 		valueInt, valueOk := scaleUpValue.To.(int)
 		if scaleUpValue.From != nil || !valueOk || valueInt != 100 {
-			t.Errorf("expected new field from nil to 100, got %v to %v (%T)", 
-			         scaleUpValue.From, scaleUpValue.To, scaleUpValue.To)
+			t.Errorf("expected new field from nil to 100, got %v to %v (%T)",
+				scaleUpValue.From, scaleUpValue.To, scaleUpValue.To)
 		}
 
 		// Verify flattened paths for nested arrays
 		expectedPaths := []string{
 			"spec.behavior.scaleUp.policies[0].type",
-			"spec.behavior.scaleUp.policies[0].value", 
+			"spec.behavior.scaleUp.policies[0].value",
 			"spec.behavior.scaleUp.policies[1].type",
 			"spec.behavior.scaleDown.policies[0].type",
 		}
