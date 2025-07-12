@@ -24,3 +24,9 @@ jobs:
     - name: Test
       run: |-
         make test/unit
+
+    - name: Format
+      run: |-
+        make fmt
+        # Check if the code is formatted correctly
+        git diff --exit-code || (echo "Code is not formatted correctly. Please run 'make fmt' to format the code." && exit 1)
