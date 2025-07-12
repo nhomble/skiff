@@ -6,9 +6,22 @@ set -e  # Exit on any error
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
 
-# Build skiff
-cd "$ROOT_DIR"
-make build > /dev/null 2>&1
+# Get the directory where the script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(dirname "$(dirname "$SCRIPT_DIR")")"
+
+# Ensure skiff is in the current directory or PATH
+if ! command -v ./skiff &> /dev/null && ! command -v skiff &> /dev/null; then
+    echo "skiff executable not found. Please ensure it is in the current directory or your PATH."
+    exit 1
+fi
+
+# Ensure conftest is in the PATH
+if ! command -v conftest &> /dev/null; then
+    echo "conftest executable not found. Please ensure it is in your PATH."
+    echo "You can download it from https://www.conftest.dev/install/"
+    exit 1
+fi
 
 echo "Testing skiff policy integration..."
 echo

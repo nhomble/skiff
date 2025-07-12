@@ -30,3 +30,29 @@ jobs:
         make fmt
         # Check if the code is formatted correctly
         git diff --exit-code || (echo "Code is not formatted correctly. Please run 'make fmt' to format the code." && exit 1)
+
+    - name: Upload skiff artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: skiff-binary
+        path: skiff
+
+  integration-test:
+    runs-on: ubuntu-latest
+    needs: build
+    container:
+      image: openpolicyagent/conftest:v0.50.0
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download skiff binary
+        uses: actions/download-artifact@v3
+        with:
+          name: skiff-binary
+          path: . # Download to the root of the workspace
+
+      - name: Make skiff executable
+        run: chmod +x ./skiff
+
+      - name: Run Integration Tests
+        run: ./test/test-policies/test-policy.sh
