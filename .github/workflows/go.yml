@@ -18,7 +18,9 @@ jobs:
         go-version: '1.x' # Use the latest stable version of Go
 
     - name: Build
-      run: make build
+      run: |-
+        find .
+        make build
 
     - name: Test
       run: make test
