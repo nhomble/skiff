@@ -55,4 +55,6 @@ jobs:
         run: chmod +x ./skiff
 
       - name: Run Integration Tests
-        run: ./test/test-policies/test-policy.sh
+        run: |-
+          find .
+          ./test/test-policies/test-policy.sh
