@@ -18,6 +18,8 @@ docker run --rm -v $(pwd):/app -w /app skiff:latest test/test-cases/before.yaml 
 
 From [docker hub](https://hub.docker.com/r/hombro/skiff)
 
+From [releases](https://github.com/nhomble/skiff/releases)
+
 ## Example
 
 ```
