@@ -3,7 +3,7 @@ package diff
 import (
 	"fmt"
 	"strings"
-	
+
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -14,11 +14,11 @@ type TerraformStyleResult struct {
 
 // ResourceChange represents a single resource change in Terraform style
 type ResourceChange struct {
-	Type         string                 `json:"type"`
-	APIVersion   string                 `json:"apiVersion"`
-	Namespace    string                 `json:"namespace"`
-	Name         string                 `json:"name"`
-	Change       Change                 `json:"change"`
+	Type       string `json:"type"`
+	APIVersion string `json:"apiVersion"`
+	Namespace  string `json:"namespace"`
+	Name       string `json:"name"`
+	Change     Change `json:"change"`
 }
 
 // FieldChange represents a change to a specific field
@@ -29,10 +29,10 @@ type FieldChange struct {
 
 // Change represents the before/after state and actions
 type Change struct {
-	Actions []string                    `json:"actions"`
-	Before  map[string]interface{}     `json:"before,omitempty"`
-	After   map[string]interface{}     `json:"after,omitempty"`
-	Changes map[string]FieldChange     `json:"changes,omitempty"`
+	Actions []string               `json:"actions"`
+	Before  map[string]interface{} `json:"before,omitempty"`
+	After   map[string]interface{} `json:"after,omitempty"`
+	Changes map[string]FieldChange `json:"changes,omitempty"`
 }
 
 // GenerateTerraformStyle creates a flat diff format for easier policy writing
@@ -69,7 +69,7 @@ func GenerateTerraformStyle(before, after map[string]map[string]interface{}) (*T
 				After:   afterObj,
 			}
 		} else if beforeExists && !afterExists {
-			// Resource was deleted  
+			// Resource was deleted
 			actions = []string{"delete"}
 			change = Change{
 				Actions: actions,
@@ -127,7 +127,6 @@ func parseResourceKey(key string) (apiVersion, kind, namespace, name string) {
 	return
 }
 
-
 // isMapType checks if a value is a map[string]interface{}
 func isMapType(val interface{}) bool {
 	_, ok := val.(map[string]interface{})
@@ -137,7 +136,7 @@ func isMapType(val interface{}) bool {
 // generateFieldChanges recursively compares two objects and generates flattened field changes
 func generateFieldChanges(before, after map[string]interface{}, prefix string) map[string]FieldChange {
 	changes := make(map[string]FieldChange)
-	
+
 	// Get all keys from both objects
 	allKeys := make(map[string]bool)
 	for key := range before {
@@ -146,16 +145,16 @@ func generateFieldChanges(before, after map[string]interface{}, prefix string) m
 	for key := range after {
 		allKeys[key] = true
 	}
-	
+
 	for key := range allKeys {
 		path := key
 		if prefix != "" {
 			path = prefix + "." + key
 		}
-		
+
 		beforeVal, beforeExists := before[key]
 		afterVal, afterExists := after[key]
-		
+
 		if !beforeExists && afterExists {
 			// Field was added
 			flattenValue(changes, path, nil, afterVal)
@@ -167,7 +166,7 @@ func generateFieldChanges(before, after map[string]interface{}, prefix string) m
 			compareValues(changes, path, beforeVal, afterVal)
 		}
 	}
-	
+
 	return changes
 }
 
@@ -191,7 +190,7 @@ func flattenValue(changes map[string]FieldChange, path string, from, to interfac
 		// Scalar value
 		changes[path] = FieldChange{From: from, To: to}
 	}
-	
+
 	// Also handle the case where from is not nil (deletions)
 	if isMapType(from) {
 		fromMap := from.(map[string]interface{})
@@ -215,7 +214,7 @@ func compareValues(changes map[string]FieldChange, path string, before, after in
 	if cmp.Equal(before, after) {
 		return // No change
 	}
-	
+
 	// If both are maps, recursively compare
 	if isMapType(before) && isMapType(after) {
 		beforeMap := before.(map[string]interface{})
@@ -226,7 +225,7 @@ func compareValues(changes map[string]FieldChange, path string, before, after in
 		}
 		return
 	}
-	
+
 	// If both are slices, compare element by element
 	if isSliceType(before) && isSliceType(after) {
 		beforeSlice := before.([]interface{})
@@ -234,7 +233,7 @@ func compareValues(changes map[string]FieldChange, path string, before, after in
 		compareSlices(changes, path, beforeSlice, afterSlice)
 		return
 	}
-	
+
 	// Different types or scalar values - record the change
 	changes[path] = FieldChange{From: before, To: after}
 }
@@ -245,10 +244,10 @@ func compareSlices(changes map[string]FieldChange, path string, before, after []
 	if len(after) > maxLen {
 		maxLen = len(after)
 	}
-	
+
 	for i := 0; i < maxLen; i++ {
 		indexPath := path + "[" + fmt.Sprintf("%d", i) + "]"
-		
+
 		if i >= len(before) {
 			// Element added
 			flattenValue(changes, indexPath, nil, after[i])
