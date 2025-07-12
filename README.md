@@ -14,6 +14,12 @@ or with image
 docker run --rm -v $(pwd):/app -w /app skiff:latest test/test-cases/before.yaml test/test-cases/after.yaml
 ```
 
+## Download
+
+From [docker hub](https://hub.docker.com/r/hombro/skiff)
+```
+```
+
 ## Example
 
 ```
