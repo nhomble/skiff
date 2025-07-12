@@ -1,11 +1,14 @@
-PROG 	:= skiff
+PROG 		:= skiff
 
-.PHONY: build test/unit clean install fmt help test/policy test benchmark example demo
+.PHONY: build image test/unit clean install fmt help test/policy test benchmark example demo
 
 all: build
 
 build:
 	go build -o $(PROG) ./cmd/skiff
+
+image:
+	docker build -t $(PROG) .
 
 fmt:
 	go fmt ./...

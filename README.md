@@ -5,7 +5,13 @@ structured kubernetes diff
 ## Usage
 
 ```sh
-skiff before.yaml after.yaml
+skiff test/test-cases/before.yaml test/test-cases/after.yaml
+```
+
+or with image
+
+```sh
+docker run --rm -v $(pwd):/app -w /app skiff:latest test/test-cases/before.yaml test/test-cases/after.yaml
 ```
 
 ## Example
