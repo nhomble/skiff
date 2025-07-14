@@ -192,8 +192,8 @@ func TestChangesField(t *testing.T) {
 		var foundCreate, foundDelete bool
 		for _, change := range result.ResourceChanges {
 			if len(change.Change.Actions) > 0 {
-				action := change.Change.Actions[0]
-				if action == "create" {
+				switch action := change.Change.Actions[0]; action {
+				case "create":
 					foundCreate = true
 					// Create should have After but no Before
 					if change.Change.Before != nil {
@@ -202,7 +202,7 @@ func TestChangesField(t *testing.T) {
 					if change.Change.After == nil {
 						t.Error("create action should have After object")
 					}
-				} else if action == "delete" {
+				case "delete":
 					foundDelete = true
 					// Delete should have Before but no After
 					if change.Change.Before == nil {
