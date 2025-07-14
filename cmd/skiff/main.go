@@ -23,14 +23,14 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error opening %s: %v\n", beforePath, err)
 		os.Exit(1)
 	}
-	defer beforeFile.Close()
+	defer beforeFile.Close() // nolint:errcheck
 
 	afterFile, err := os.Open(afterPath)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error opening %s: %v\n", afterPath, err)
 		os.Exit(1)
 	}
-	defer afterFile.Close()
+	defer afterFile.Close() // nolint:errcheck
 
 	beforeObjects, err := k8s.ParseYAMLStream(beforeFile)
 	if err != nil {
