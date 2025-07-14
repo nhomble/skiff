@@ -31,6 +31,11 @@ jobs:
         # Check if the code is formatted correctly
         git diff --exit-code || (echo "Code is not formatted correctly. Please run 'make fmt' to format the code." && exit 1)
 
+    - name: Lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+
     - name: Upload skiff artifact
       uses: actions/upload-artifact@v4
       with:
