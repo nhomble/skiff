@@ -79,13 +79,13 @@ func TestChangesField(t *testing.T) {
 		if err != nil {
 			t.Fatalf("failed to open before file: %v", err)
 		}
-		defer beforeFile.Close()
+		defer beforeFile.Close() // nolint
 
 		afterFile, err := os.Open("../../test/test-cases/hpa-after.yaml")
 		if err != nil {
 			t.Fatalf("failed to open after file: %v", err)
 		}
-		defer afterFile.Close()
+		defer afterFile.Close() // nolint
 
 		beforeObjects, err := k8s.ParseYAMLStream(beforeFile)
 		if err != nil {
@@ -160,13 +160,13 @@ func TestChangesField(t *testing.T) {
 		if err != nil {
 			t.Fatalf("failed to open before file: %v", err)
 		}
-		defer beforeFile.Close()
+		defer beforeFile.Close() // nolint
 
 		afterFile, err := os.Open("../../test/test-cases/create-delete-after.yaml")
 		if err != nil {
 			t.Fatalf("failed to open after file: %v", err)
 		}
-		defer afterFile.Close()
+		defer afterFile.Close() // nolint
 
 		beforeObjects, err := k8s.ParseYAMLStream(beforeFile)
 		if err != nil {
