@@ -34,6 +34,7 @@ jobs:
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v5
       with:
+        version: v1.59.1
         args: --out-format=colored-line-number 
 
     - name: Upload skiff artifact
